@@ -5,10 +5,10 @@ class User {
   int age;
   List<String> professions;
 
-  User(
-    this.name,
-    this.age,
-    this.professions
-  );
+  User({
+    required this.name,
+    required this.age,
+    this.professions = const []
+  });
 
 }

@@ -1,5 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:state_management/models/models.dart';
+
+import 'package:state_management/services/services.dart';
 
 class Page1 extends StatelessWidget {
 
@@ -7,12 +11,23 @@ class Page1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final userService = Provider.of<UserService>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Page 1', style: TextStyle( color: Colors.white ) ),
         backgroundColor: Colors.blue,
+        actions: [
+          IconButton(
+            onPressed: userService.removeUser,
+            icon: const Icon( Icons.exit_to_app )
+          )
+        ],
       ),
-      body: _UserInfo(),
+      body: userService.existsUser
+        ? _UserInfo( user: userService.user )
+        : const Center( child: Text('No hay usuario seleccionado') ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, 'page2'),
         child: const Icon(Icons.accessibility_new),
@@ -22,8 +37,12 @@ class Page1 extends StatelessWidget {
 }
 
 class _UserInfo extends StatelessWidget {
+
+  final User? user;
+
   const _UserInfo({
     super.key,
+    required this.user,
   });
 
   @override
@@ -32,20 +51,19 @@ class _UserInfo extends StatelessWidget {
       height: double.infinity,
       width: double.infinity,
       padding: const EdgeInsets.all(20.0),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('General', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
-          Divider(),
+          const Text('General', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
+          const Divider(),
 
-          ListTile( title: Text('Nombre: ' ) ),
-          ListTile( title: Text('Edad: ' ) ),
+          ListTile( title: Text('Nombre: ${user?.name}' ) ),
+          ListTile( title: Text('Edad: ${user?.age}' ) ),
 
-          Text('Profesiones', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
-          Divider(),
+          const Text('Profesiones', style: TextStyle( fontSize: 18, fontWeight: FontWeight.bold ) ),
+          const Divider(),
 
-          ListTile( title: Text('Profesion 1: ' ) ),
-          ListTile( title: Text('Profesion 2: ' ) ),
+          ...user!.professions.map((profession) => ListTile( title: Text(profession) )).toList()
         ],
       ),
     );
