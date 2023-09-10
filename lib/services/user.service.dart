@@ -10,7 +10,7 @@ class UserService extends ChangeNotifier {
 
   bool get existsUser => _user != null ? true : false;
 
-  set user(User user) {
+  set user(User? user) {
     _user = user;
     notifyListeners();
   }
