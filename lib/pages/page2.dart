@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:state_management/controllers/user.controller.dart';
+import 'package:state_management/models/models.dart';
 
 class Page2 extends StatelessWidget {
 
@@ -7,6 +10,9 @@ class Page2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final userController = Get.find<UserController>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Page 1', style: TextStyle( color: Colors.white ) ),
@@ -17,19 +23,26 @@ class Page2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                final user = User(name: "Matias Baez", age: 26, professions: ["Fullstack developer"]);
+                userController.loadUser(user);
+              },
               color: Colors.blue,
               child: const Text('Set user', style: TextStyle( color: Colors.white )),
             ),
 
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                userController.updateAge(25);
+              },
               color: Colors.blue,
               child: const Text('Change age', style: TextStyle( color: Colors.white )),
             ),
 
             MaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                userController.addProfession("Mobile developer");
+              },
               color: Colors.blue,
               child: const Text('Add profession', style: TextStyle( color: Colors.white )),
             ),

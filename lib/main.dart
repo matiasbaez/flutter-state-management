@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:state_management/pages/pages.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -20,11 +21,15 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: 'page1',
-      routes: {
-        'page1': (_) => const Page1(),
-        'page2': (_) => const Page2(),
-      },
-      home: Scaffold(),
+      // routes: {
+      //   'page1': (_) => const Page1(),
+      //   'page2': (_) => const Page2(),
+      // },
+      getPages: [
+        GetPage(name: '/page1', page: () => const Page1()),
+        GetPage(name: '/page2', page: () => const Page2())
+      ],
+      home: const Scaffold(),
     );
   }
 }
