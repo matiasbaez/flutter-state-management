@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:state_management/controllers/user.controller.dart';
 import 'package:state_management/models/models.dart';
 
@@ -26,6 +27,15 @@ class Page2 extends StatelessWidget {
               onPressed: () {
                 final user = User(name: "Matias Baez", age: 26, professions: ["Fullstack developer"]);
                 userController.loadUser(user);
+                Get.snackbar(
+                  'User updated',
+                  'Go back to see the results',
+                  colorText: Colors.white,
+                  backgroundColor: Colors.blueGrey,
+                  boxShadows: const [
+                    BoxShadow( color: Colors.black38, blurRadius: 10 )
+                  ]
+                );
               },
               color: Colors.blue,
               child: const Text('Set user', style: TextStyle( color: Colors.white )),
